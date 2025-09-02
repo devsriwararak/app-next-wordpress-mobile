@@ -12,7 +12,7 @@ const PageHome = () => {
         <div className=''>
             <h1 className='text-3xl font-extrabold text-center mt-20 ' >เลือกรายการที่ต้องการ</h1>
 
-            <div className='flex flex-col md:flex-row gap-4 items-center justify-center mt-10 mx-40 '>
+            <div className='flex flex-col md:flex-row gap-4 items-center justify-center mt-10 mx-4 md:mx-40 '>
                 <div className={`w-full border border-gray-400 rounded-md px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 1 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(1)}>
                     <div className='text-center' >
                         <p className='text-xl font-semibold'> ผ่อนไอโฟน มือ 1</p>
@@ -25,7 +25,7 @@ const PageHome = () => {
                 </div>
             </div>
 
-            <div className='flex flex-col md:flex-row gap-4 items-center justify-center mt-10 mx-40 '>
+            <div className='flex flex-col md:flex-row gap-4 items-center justify-center mt-10 mx-4 md:mx-40 '>
                 <div className={`w-full border border-gray-400 rounded-md px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 3 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(3)}>
                     <div className='text-center'>
                         <p className='text-xl font-semibold'>ไอโฟนแลกเงิน</p>
@@ -38,9 +38,9 @@ const PageHome = () => {
                 </div>
             </div>
 
-            <hr className='my-8 mx-40 text-gray-300' />
+            <hr className='my-8 mx-6  md:mx-40 text-gray-300' />
 
-            <div className='mx-40'>
+            <div className='mx-6 md:mx-40'>
                 {selectPage === 1 && (<Page1 />)}
                 {selectPage === 2 && (<Page2 />)}
                 {selectPage === 3 && (<Page3 />)}

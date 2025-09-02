@@ -35,7 +35,7 @@ const Page4 = () => {
     const handleCalculate = ()=> {
         let sum = null
         if(select1 && select2 && select3) {
-             sum  = (Number(select1) * Number(2)) * Number(select3)
+             sum  = Number(select2)  * Number(select3)
         }
         setSum(Number(sum))
 
@@ -47,6 +47,13 @@ const Page4 = () => {
         setSelect2("")
         setSelect3("")
     }
+
+    useEffect(()=> {
+        if(select1){
+            const sum = Number(select1) - 10000
+            setSelect2(String(sum))
+        }
+    },[select1])
 
     if (loading) return <div>โหลดข้อมูล ...... </div>;
     return (
@@ -64,22 +71,17 @@ const Page4 = () => {
                 </div>
 
                 <div className='w-full'>
-                    <label htmlFor="">ดาว กี่% </label>
-                    <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e)=>setSelect2(e.target.value)} value={select2}>
-                        <option value="">เลือก</option>
-                        <option value="100">10%</option>
-                        <option value="200">20%</option>
-                        <option value="300">30%</option>
-                    </select>
+                    <label htmlFor="">ราคามัดจำ (บาท) </label>
+                    <div className='w-full border border-gray-400 px-4 py-2 rounded-md mt-2 bg-gray-200'>{Number(select2).toLocaleString() || "0.00"}</div>
                 </div>
 
                 <div className='w-full'>
-                    <label htmlFor="">ผ่อนกี่เดือน </label>
+                    <label htmlFor="">รอบจ่ายค่าเช่า (วัน) </label>
                     <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e)=>setSelect3(e.target.value)} value={select3}>
                         <option value="">เลือก</option>
-                        <option value="30">1 เดือน</option>
-                        <option value="60">2 เดือน</option>
-                        <option value="90">3 เดือน</option>
+                        <option value="7">7 วัน</option>
+                        <option value="10">10 วัน</option>
+                        <option value="15">15 วัน</option>
                    
                     </select>
                 </div>

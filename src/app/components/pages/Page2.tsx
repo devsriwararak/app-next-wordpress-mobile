@@ -16,7 +16,7 @@ const Page2 = () => {
     useEffect(() => {
         async function fetchProducts() {
             try {
-                const response = await fetch("/api/products");
+                const response = await fetch("/api/products?category=second-hand-iphone");
                 const data: Product[] = await response.json();
                 console.log(data);
                 
