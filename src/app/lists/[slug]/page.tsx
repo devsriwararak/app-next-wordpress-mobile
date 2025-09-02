@@ -170,7 +170,7 @@ export default async function ProductDetailPage({ params }: { params: { slug: st
 
   return (
     <div style={{ padding: '2rem', maxWidth: '800px', margin: 'auto' }}>
-      <Link href="/" style={{ marginBottom: '2rem', display: 'block' }}>
+      <Link href={process.env.NODE_ENV === "production" ? String(process.env.NEXT_PUBLIC_WEBSITE) : "/"} style={{ marginBottom: '2rem', display: 'block' }}>
         &larr; กลับหน้าหลัก
       </Link>
       <h1>{product.name}</h1>

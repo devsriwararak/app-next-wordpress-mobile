@@ -19,7 +19,7 @@ export default function ProductWidget({ products }: { products: Product[] }) {
           <li key={product.id} style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '8px' }}>
             <h2>{product.name}</h2>
             {/* ลิงก์ไปยังหน้ารายละเอียดสินค้าใน Next.js */}
-            <Link href={`/lists/${product.slug}`} passHref target="_top">
+            {/* <Link href={`/lists/${product.slug}`} passHref target="_top">
               <button style={{
                 backgroundColor: '#007bff',
                 color: 'white',
@@ -30,7 +30,25 @@ export default function ProductWidget({ products }: { products: Product[] }) {
               }}>
                 ดูรายละเอียด
               </button>
-            </Link>
+            </Link> */}
+            <a
+              href={`https://mittrathaiphone.com/lists/${product.slug}`}
+              target="_top"
+              style={{ textDecoration: 'none' }}
+            >
+              <button
+                style={{
+                  backgroundColor: '#007bff',
+                  color: 'white',
+                  border: 'none',
+                  padding: '10px 20px',
+                  borderRadius: '5px',
+                  cursor: 'pointer'
+                }}
+              >
+                ดูรายละเอียด
+              </button>
+            </a>
           </li>
         ))}
       </ul>
