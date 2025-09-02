@@ -8,4 +8,5 @@ export interface Product {
   name: string;
   images: ProductImage[];
   slug: string; // <-- Add the slug property here
+  price : string
 }

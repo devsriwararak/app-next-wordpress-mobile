@@ -53,33 +53,35 @@
 import { useEffect, useState } from "react";
 import ProductWidget from "./components/ProductWidget";
 import { Product } from "./type";
+import PageHome from "./components/Home";
 
 export default function Home() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  // const [products, setProducts] = useState<Product[]>([]);
+  // const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const response = await fetch("/api/products");
-        const data: Product[] = await response.json();
-        setProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchProducts() {
+  //     try {
+  //       const response = await fetch("/api/products");
+  //       const data: Product[] = await response.json();
+  //       setProducts(data);
+  //     } catch (error) {
+  //       console.error("Error fetching products:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
 
-    fetchProducts();
-  }, []);
+  //   fetchProducts();
+  // }, []);
 
-  if (loading) return <div>Loading products... 001</div>;
+  // if (loading) return <div>Loading products... 001</div>;
 
   return (
     <div>
-      <h1>สินค้าแนะนำ</h1>
-      <ProductWidget products={products} />
+   
+      {/* <ProductWidget products={products} /> */}
+      <PageHome />
     </div>
   );
 }
