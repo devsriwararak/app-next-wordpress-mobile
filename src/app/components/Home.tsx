@@ -12,28 +12,28 @@ const PageHome = () => {
         <div className=''>
             <h1 className='text-3xl font-extrabold text-center mt-20 ' >เลือกรายการที่ต้องการ</h1>
 
-            <div className='flex flex-col md:flex-row gap-4 items-center justify-center mt-10 mx-4 md:mx-40 '>
+            <div className='flex flex-row gap-3 md:gap-4 items-center justify-center mt-10 mx-4 md:mx-40 text-base '>
                 <div className={`w-full border border-gray-400 rounded-md px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 1 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(1)}>
                     <div className='text-center' >
-                        <p className='text-xl font-semibold'> ผ่อนไอโฟน มือ 1</p>
+                        <p className=' text-md md:text-xl font-semibold'> ผ่อนไอโฟน มือ 1</p>
                     </div>
                 </div>
                 <div className={`w-full border border-gray-400 rounded-md px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 2 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(2)}>
                     <div className=' text-center'>
-                        <p className='font-semibold text-xl'>ผ่อนไอโฟน มือ 2</p>
+                        <p className='font-semibold text-md md:text-xl'>ผ่อนไอโฟน มือ 2</p>
                     </div>
                 </div>
             </div>
 
-            <div className='flex flex-col md:flex-row gap-4 items-center justify-center mt-10 mx-4 md:mx-40 '>
+            <div className='flex flex-row gap-3 md:gap-4 items-center justify-center mt-10 mx-4 md:mx-40 '>
                 <div className={`w-full border border-gray-400 rounded-md px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 3 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(3)}>
                     <div className='text-center'>
-                        <p className='text-xl font-semibold'>ไอโฟนแลกเงิน</p>
+                        <p className='text-md md:text-xl font-semibold'>ไอโฟนแลกเงิน</p>
                     </div>
                 </div>
-                <div className={`w-full border border-gray-400 rounded-md px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 4 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(4)}>
+                <div className={`w-full border border-gray-400 rounded-md px-0.5 md:px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 4 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(4)}>
                     <div className=' text-center'>
-                        <p className='font-semibold text-xl'>เช่าไอโฟน กับบริษัทเรา</p>
+                        <p className='font-semibold text-base md:text-xl'>เช่าไอโฟน กับบริษัทเรา</p>
                     </div>
                 </div>
             </div>
