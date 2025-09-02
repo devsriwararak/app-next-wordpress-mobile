@@ -54,7 +54,7 @@ const Page2 = () => {
 
             <div className='flex flex-col md:flex-row gap-4'>
                 <div className='w-full'>
-                    <label htmlFor="">เลือกรุ่นมือถือ</label>
+                    <label htmlFor="">เลือกรุ่นมือถือ - ราคา {Number(select1).toLocaleString() || "0"} บาท</label>
                     <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e)=>setSelect1(e.target.value)} value={select1}>
                         <option value="">เลือก</option>
                         {products.map((item) => (
