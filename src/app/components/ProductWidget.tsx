@@ -19,7 +19,7 @@ export default function ProductWidget({ products }: { products: Product[] }) {
           <li key={product.id} style={{ marginBottom: '1rem', border: '1px solid #ccc', padding: '1rem', borderRadius: '8px' }}>
             <h2>{product.name}</h2>
             {/* ลิงก์ไปยังหน้ารายละเอียดสินค้าใน Next.js */}
-            <Link href={`/lists/${product.slug}`} passHref>
+            <Link href={`/lists/${product.slug}`} passHref target="_top">
               <button style={{
                 backgroundColor: '#007bff',
                 color: 'white',
