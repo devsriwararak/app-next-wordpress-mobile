@@ -21,6 +21,8 @@ async function getProducts(): Promise<Product[]> {
         Authorization: `Basic ${credentials}`
       }
     });
+    console.log({response});
+    
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
