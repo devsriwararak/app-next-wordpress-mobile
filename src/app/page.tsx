@@ -41,7 +41,7 @@ export default async function Home() {
 
   return (
     <div>
-      <h1>สินค้าแนะนำ</h1>
+      <h1>สินค้าแนะนำ 0001</h1>
       <ProductWidget products={products} />
     </div>
   );
