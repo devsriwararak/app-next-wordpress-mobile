@@ -7,6 +7,7 @@ import Page4 from './pages/Page4'
 
 const PageHome = () => {
     const [selectPage, setSelectPage] = useState<number | null>(null)
+    const [statusForm, setStatusForm] = useState(false)
 
     return (
         <div className=''>
@@ -38,55 +39,62 @@ const PageHome = () => {
                 </div>
             </div>
 
-            <hr className='my-8 mx-6  md:mx-40 text-gray-300' />
+            <hr className='my-6 md:my-14 mx-6  md:mx-40 text-gray-300' />
 
             <div className='mx-6 md:mx-40'>
-                {selectPage === 1 && (<Page1 />)}
-                {selectPage === 2 && (<Page2 />)}
-                {selectPage === 3 && (<Page3 />)}
-                {selectPage === 4 && (<Page4 />)}
+                {selectPage === 1 && (<Page1 setStatusForm={setStatusForm} />)}
+                {selectPage === 2 && (<Page2 setStatusForm={setStatusForm} />)}
+                {selectPage === 3 && (<Page3 setStatusForm={setStatusForm} />)}
+                {selectPage === 4 && (<Page4 setStatusForm={setStatusForm} />)}
 
             </div>
 
 
+            <hr className='my-6 md:my-14 mx-6  md:mx-40 text-gray-300' />
 
             {/* Form SEnd */}
-            {/* <div className='mt-10 mx-40'>
-                <div className='flex flex-col md:flex-row gap-4'>
-                    <div className='w-full'>
-                        <p>คำนำหน้าชื่อ</p>
-                        <input type="text" placeholder='กรอกชื่อ' className='border border-gray-400 px-4 py-1.5 rounded-md w-full' />
+            {statusForm && (
+                <div className='mt-10 mx-40'>
+                    <div className='flex flex-col md:flex-row gap-4'>
+                        <div className='w-full'>
+                            <p>คำนำหน้าชื่อ</p>
+                            <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' >
+                                <option value="">เลือก</option>
+                                <option value="นาย">นาย </option>
+                                <option value="นางสาว">นางสาว</option>
+                                <option value="นาง">นาง</option>
+                            </select>
+                        </div>
+
+
+                        <div className='w-full'>
+                            <p>ชื่อ-สกุล</p>
+                            <input type="text" placeholder='กรอกชื่อ-สกุล' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2' />
+                        </div>
+
+                        <div className='w-full'>
+                            <p>เบอร์โทรศัพท์</p>
+                            <input type="number" placeholder='กรอกเบอร์โทรศัพท์' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2' />
+                        </div>
+
+
                     </div>
 
-                    <div className='w-full'>
-                        <p>คำนำหน้าชื่อ</p>
-                        <input type="text" placeholder='กรอกชื่อ' className='border border-gray-400 px-4 py-1.5 rounded-md w-full' />
+                    <div className='flex flex-col md:flex-row gap-4 mt-6'>
+                        <div className='w-full'>
+                            <p>ที่อยู่</p>
+                            <input type="text" placeholder='กรอกที่อยู่' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2' />
+                        </div>
+                        {/* 
+                        <div className='w-full'>
+                            <p>คำนำหน้าชื่อ</p>
+                            <input type="text" placeholder='กรอกชื่อ' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2' />
+                        </div> */}
                     </div>
-
-                    <div className='w-full'>
-                        <p>คำนำหน้าชื่อ</p>
-                        <input type="text" placeholder='กรอกชื่อ' className='border border-gray-400 px-4 py-1.5 rounded-md w-full' />
-                    </div>
+                    <button onClick={() => alert('บันทึกสำเร็จ !')} className='mt-10 w-full bg-linear-to-r from-green-600 to-green-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยืนยัน</button>
                 </div>
+            )}
 
-           
-
-                <div className='flex flex-col md:flex-row gap-4 mt-6'>
-                    <div className='w-full'>
-                        <p>คำนำหน้าชื่อ</p>
-                        <input type="text" placeholder='กรอกชื่อ' className='border border-gray-400 px-4 py-1.5 rounded-md w-full' />
-                    </div>
-
-                    <div className='w-full'>
-                        <p>คำนำหน้าชื่อ</p>
-                        <input type="text" placeholder='กรอกชื่อ' className='border border-gray-400 px-4 py-1.5 rounded-md w-full' />
-                    </div>
-
-                </div>
-
-                <button className='mt-10 w-full bg-linear-to-r from-blue-400 to-blue-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยืนยัน</button>
-
-            </div> */}
         </div>
     )
 }

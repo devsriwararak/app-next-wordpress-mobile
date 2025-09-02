@@ -2,7 +2,7 @@
 import { Product } from '@/app/type';
 import React, { useEffect, useState } from 'react'
 
-const Page1 = () => {
+const Page1 = ({setStatusForm} : {setStatusForm : (value:boolean)=> void}) => {
 
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
@@ -37,8 +37,10 @@ const Page1 = () => {
         if (select1 && select2 && select3) {
             const test = (Number(select1) * Number(select2)) / 100
             sum = (Number(select1) - test) / Number(select3)
+            setStatusForm(true)
         }
         setSum(Number(sum))
+        
     }
 
     const handleCancel = () => {
@@ -46,6 +48,7 @@ const Page1 = () => {
         setSelect1("")
         setSelect2("")
         setSelect3("")
+        setStatusForm(false)
     }
 
     if (loading) return <div>โหลดข้อมูล ...... </div>;
@@ -87,7 +90,7 @@ const Page1 = () => {
             </div>
 
             <div className='mt-8 text-center flex gap-4'>
-                <button onClick={handleCalculate} className=' w-full bg-linear-to-r from-blue-400 to-blue-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>คำนวณ</button>
+                <button onClick={handleCalculate} className=' w-full bg-linear-to-r from-orange-400 to-orange-600 py-3 rounded-md text-white font-extrabold cursor-pointer'>คำนวณ</button>
                 <button onClick={handleCancel} className=' w-full bg-linear-to-r from-blue-400 to-blue-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยกเลิก</button>
             </div>
 

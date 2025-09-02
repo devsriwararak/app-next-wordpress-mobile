@@ -2,7 +2,7 @@
 import { Product } from '@/app/type';
 import React, { useEffect, useState } from 'react'
 
-const Page3 = () => {
+const Page3 = ({setStatusForm} : {setStatusForm : (value:boolean)=> void}) => {
 
 
     const [products, setProducts] = useState<Product[]>([]);
@@ -47,6 +47,7 @@ const Page3 = () => {
             if(select6) {
             sumMount = Number(sum) / Number(select6)
             }
+             setStatusForm(true)
         }
         
         setSum(Number(sum))
@@ -63,6 +64,7 @@ const Page3 = () => {
         setSelect4("")
         setSelect5("")
         setSelect6("")
+        setStatusForm(false)
     }
 
     return (
@@ -137,7 +139,7 @@ const Page3 = () => {
             </div>
 
             <div className='mt-8 text-center flex gap-4'>
-                <button onClick={handleCalculate} className=' w-full bg-linear-to-r from-blue-400 to-blue-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>คำนวณ</button>
+                <button onClick={handleCalculate} className=' w-full bg-linear-to-r from-orange-400 to-orange-600 py-3 rounded-md text-white font-extrabold cursor-pointer'>คำนวณ</button>
                 <button onClick={handleCancel} className=' w-full bg-linear-to-r from-blue-400 to-blue-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยกเลิก</button>
             </div>
 
