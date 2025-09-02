@@ -32,13 +32,13 @@ const Page2 = () => {
     }, []);
 
 
-    const handleCalculate = ()=> {
+    const handleCalculate = () => {
         let sum = null
-        if(select1 && select2 && select3) {
-             sum  = (Number(select1) * Number(2)) * Number(select3)
+        if (select1 && select2 && select3) {
+            const test = (Number(select1) * Number(select2)) / 100
+            sum = (Number(select1) - test) / Number(select3)
         }
         setSum(Number(sum))
-
     }
 
     const handleCancel = ()=> {
@@ -67,9 +67,9 @@ const Page2 = () => {
                     <label htmlFor="">ดาว กี่% </label>
                     <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e)=>setSelect2(e.target.value)} value={select2}>
                         <option value="">เลือก</option>
-                        <option value="100">10%</option>
-                        <option value="200">20%</option>
-                        <option value="300">30%</option>
+                        <option value="10">10%</option>
+                        <option value="20">20%</option>
+                        <option value="30">30%</option>
                     </select>
                 </div>
 
@@ -77,9 +77,9 @@ const Page2 = () => {
                     <label htmlFor="">ผ่อนกี่เดือน </label>
                     <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e)=>setSelect3(e.target.value)} value={select3}>
                         <option value="">เลือก</option>
-                        <option value="30">1 เดือน</option>
-                        <option value="60">2 เดือน</option>
-                        <option value="90">3 เดือน</option>
+                        <option value="1">1 เดือน</option>
+                        <option value="2">2 เดือน</option>
+                        <option value="3">3 เดือน</option>
                    
                     </select>
                 </div>

@@ -7,11 +7,11 @@ const Page1 = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
 
-    const [select1 , setSelect1] = useState("")
-    const [select2 , setSelect2] = useState("")
-    const [select3 , setSelect3] = useState("")
+    const [select1, setSelect1] = useState("")
+    const [select2, setSelect2] = useState("")
+    const [select3, setSelect3] = useState("")
 
-    const [sum , setSum] = useState(0)
+    const [sum, setSum] = useState(0)
 
     useEffect(() => {
         async function fetchProducts() {
@@ -19,7 +19,7 @@ const Page1 = () => {
                 const response = await fetch("/api/products?product-category=iphone-new");
                 const data: Product[] = await response.json();
                 console.log(data);
-                
+
                 setProducts(data);
             } catch (error) {
                 console.error("Error fetching products:", error);
@@ -32,16 +32,16 @@ const Page1 = () => {
     }, []);
 
 
-    const handleCalculate = ()=> {
+    const handleCalculate = () => {
         let sum = null
-        if(select1 && select2 && select3) {
-             sum  = (Number(select1) * Number(2)) * Number(select3)
+        if (select1 && select2 && select3) {
+            const test = (Number(select1) * Number(select2)) / 100
+            sum = (Number(select1) - test) / Number(select3)
         }
         setSum(Number(sum))
-
     }
 
-    const handleCancel = ()=> {
+    const handleCancel = () => {
         setSum(0)
         setSelect1("")
         setSelect2("")
@@ -55,7 +55,7 @@ const Page1 = () => {
             <div className='flex flex-col md:flex-row gap-4'>
                 <div className='w-full'>
                     <label htmlFor="">เลือกรุ่นมือถือ</label>
-                    <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e)=>setSelect1(e.target.value)} value={select1}>
+                    <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect1(e.target.value)} value={select1}>
                         <option value="">เลือก</option>
                         {products.map((item) => (
                             <option key={item.id} value={item.price}>{item.name}</option>
@@ -65,22 +65,23 @@ const Page1 = () => {
 
                 <div className='w-full'>
                     <label htmlFor="">ดาว กี่% </label>
-                    <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e)=>setSelect2(e.target.value)} value={select2}>
+                    <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect2(e.target.value)} value={select2}>
                         <option value="">เลือก</option>
-                        <option value="100">10%</option>
-                        <option value="200">20%</option>
-                        <option value="300">30%</option>
+                        <option value="30">30% </option>
+                        <option value="40">40%</option>
+                        <option value="50">50%</option>
+                        <option value="60">60%</option>
                     </select>
                 </div>
 
                 <div className='w-full'>
                     <label htmlFor="">ผ่อนกี่เดือน </label>
-                    <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e)=>setSelect3(e.target.value)} value={select3}>
+                    <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect3(e.target.value)} value={select3}>
                         <option value="">เลือก</option>
-                        <option value="30">1 เดือน</option>
-                        <option value="60">2 เดือน</option>
-                        <option value="90">3 เดือน</option>
-                   
+                        <option value="1">1 เดือน</option>
+                        <option value="2">2 เดือน</option>
+                        <option value="3">3 เดือน</option>
+
                     </select>
                 </div>
             </div>

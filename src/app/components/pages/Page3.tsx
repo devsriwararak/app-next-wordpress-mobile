@@ -114,7 +114,7 @@ const Page3 = () => {
                 </div>
 
                 <div className='w-full'>
-                    <label htmlFor="">อัพเดทเวอไหน ? </label>
+                    <label htmlFor="">เวอร์ชั่น IOS ? </label>
                     <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect5(e.target.value)} value={select5}>
                         <option value="">เลือก</option>
                         <option value="30">IOS 10</option>
