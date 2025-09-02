@@ -90,14 +90,14 @@ const Page3 = () => {
                 </div>
 
                 <div className='w-full'>
-                    <label htmlFor="">ประเมิณแบตเสื่อม </label>
-                    <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect3(e.target.value)} value={select3}>
+                    <label htmlFor="">แบตเตอรี่ (%)</label>
+                    {/* <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect3(e.target.value)} value={select3}>
                         <option value="">เลือก</option>
                         <option value="100">เสื่อม 10%</option>
                         <option value="200">เสื่อม 20%</option>
                         <option value="300">เสื่อม 30%</option>
-
-                    </select>
+                    </select> */}
+                    <input type="number" placeholder='90' className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect3(e.target.value)} value={select3} />
                 </div>
             </div>
 
