@@ -56,6 +56,7 @@ const Page4 = () => {
     },[select1])
 
     if (loading) return <div>โหลดข้อมูล ...... </div>;
+    
     return (
         <div>
 

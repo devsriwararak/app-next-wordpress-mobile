@@ -10,7 +10,7 @@ const PageHome = () => {
 
     return (
         <div className=''>
-            <h1 className='text-3xl font-extrabold text-center mt-20 ' >เลือกรายการที่ต้องการ (ส่งเพื่อตรวจ)</h1>
+            <h1 className='text-3xl font-extrabold text-center mt-20 ' >เลือกรายการที่ต้องการ  <span className='bg-red-600 text-white px-4 py-2 rounded-md'>(ส่งเพื่อตรวจ แยกกันกับ เว็บไซต์ ครั้งที่ 1/2)</span></h1>
 
             <div className='flex flex-row gap-3 md:gap-4 items-center justify-center mt-10 mx-4 md:mx-40 text-base '>
                 <div className={`w-full border border-gray-400 rounded-md px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 1 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(1)}>
