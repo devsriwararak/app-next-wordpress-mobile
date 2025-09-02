@@ -41,7 +41,7 @@ console.log("Key:", process.env.NEXT_PUBLIC_CONSUMER_KEY);
 
   return (
     <div>
-      <h1>สินค้าแนะนำ 0001</h1>
+      <h1>สินค้าแนะนำ 0003</h1>
       <ProductWidget products={products} />
     </div>
   );
