@@ -10,6 +10,37 @@ const PageHome = () => {
     const [selectPage, setSelectPage] = useState<number | null>(null)
     const [statusForm, setStatusForm] = useState(false)
 
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+
+    const handleSubmit = async () => {
+        if (!name || !phone || !email) {
+            toast.error('กรุณากรอกข้อมูลให้ครบทุกช่อง');
+            return;
+        }
+
+        try {
+            const res = await fetch('/api/send-mail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, phone, email })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                toast.success('บันทึกสำเร็จ !');
+                setName(''); setPhone(''); setEmail('');
+            } else {
+                toast.error(data.message || 'เกิดข้อผิดพลาดในการส่งอีเมล');
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('เกิดข้อผิดพลาดในการส่งอีเมล');
+        }
+    };
+
     useEffect(() => {
         setStatusForm(false)
     }, [selectPage])
@@ -63,28 +94,30 @@ const PageHome = () => {
                 <div className='mt-10 mx-40'>
                     <div className='flex flex-col md:flex-row gap-4'>
                         <div className='w-full'>
-                            <p>คำนำหน้าชื่อ</p>
-                            <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' >
-                                <option value="">เลือก</option>
-                                <option value="นาย">นาย </option>
-                                <option value="นางสาว">นางสาว</option>
-                                <option value="นาง">นาง</option>
-                            </select>
-                        </div>
-
-
-                        <div className='w-full'>
                             <p>ชื่อ-สกุล</p>
-                            <input type="text" placeholder='กรอกชื่อ-สกุล' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2' />
-                        </div>
-
-                        <div className='w-full'>
-                            <p>เบอร์โทรศัพท์</p>
-                            <input type="number" placeholder='กรอกเบอร์โทรศัพท์' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2' />
+                            <input type="text" placeholder='กรอกชื่อ-สกุล'
+                                className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2'
+                                value={name} onChange={e => setName(e.target.value)} />
                         </div>
                     </div>
 
-                    <button onClick={() => toast.success('บันทึกสำเร็จ !')} className='mt-10 w-full bg-linear-to-r from-green-600 to-green-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยืนยัน</button>
+                    <div className='flex flex-col md:flex-row gap-4 mt-4'>
+                        <div className='w-full'>
+                            <p>เบอร์โทรศัพท์</p>
+                            <input type="number" placeholder='กรอกเบอร์โทรศัพท์' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2'
+                                value={phone} onChange={e => setPhone(e.target.value)}
+                            />
+                        </div>
+
+                        <div className='w-full'>
+                            <p>กรอกเมล์</p>
+                            <input type="mail" placeholder='กรอกเมล์' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2'
+                                value={email} onChange={e => setEmail(e.target.value)}
+                            />
+                        </div>
+                    </div>
+
+                    <button onClick={handleSubmit} className='mt-10 w-full bg-linear-to-r from-green-600 to-green-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยืนยัน</button>
                 </div>
             )}
 

@@ -1,5 +1,5 @@
 "use client"
-import { Product } from '@/app/type';
+import { DayOption, Product, ProductById, Variation } from '@/app/type';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
@@ -10,20 +10,25 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
     const [loading, setLoading] = useState(true);
 
     const [select1, setSelect1] = useState("")
-    const [select2, setSelect2] = useState("")
+    // const [select2, setSelect2] = useState("")
     const [select3, setSelect3] = useState("")
 
     const [sum, setSum] = useState(0)
     const [showDetail, setShowDetail] = useState<Product | null>(null)
+    const [deposit, setDeposit] = useState<number | null>(null)
+
+
+
+    const [selectDay, setSelectDay] = useState<DayOption[]>([])
 
     useEffect(() => {
         async function fetchProducts() {
             try {
                 const response = await fetch("/api/products?category=47");
                 const data: Product[] = await response.json();
+                setProducts(data);
                 console.log(data);
 
-                setProducts(data);
             } catch (error) {
                 console.error("Error fetching products:", error);
             } finally {
@@ -31,14 +36,46 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
             }
         }
 
+
+
         fetchProducts();
     }, []);
+
+    async function fetchProductByid(id: number) {
+        try {
+            const response = await fetch(`/api/product?id=${id}`);
+            const data: ProductById = await response.json();
+            // setProducts(data);
+            console.log({ data });
+            const labels = data.attributes[1].options
+            console.log({ labels });
+
+            const dayOptions: DayOption[] = labels.map((label: string) => {
+                const variation = (data.variations as Variation[] | undefined)?.find(
+                    (v) => v.attributes.some((a) => a.option === label)
+                );
+
+                return {
+                    label,
+                    value: variation?.price || "0",
+                    description: variation?.description || "",
+                };
+            });
+
+            setSelectDay(dayOptions)
+
+        } catch (error) {
+            console.error("Error fetching products:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
 
     const handleCalculate = () => {
         let sum = null
-        if (select1 && select2 && select3) {
-            sum = Number(select2) * Number(select3)
+        if (select1 && select3 && deposit) {
+            sum = select3
             setStatusForm(true)
         } else {
             toast.error('กรุณาเลือกให้ครบทุกรายการ !')
@@ -50,16 +87,15 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
     const handleCancel = () => {
         setSum(0)
         setSelect1("")
-        setSelect2("")
         setSelect3("")
         setStatusForm(false)
         setShowDetail(null)
     }
 
+
     useEffect(() => {
         if (select1) {
-            const sum = Number(select1) - 500
-            setSelect2(String(sum))
+            setDeposit(Number(showDetail?.attributes[0].options[0]))
         }
     }, [select1])
 
@@ -67,7 +103,6 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
     return (
         <div className='flex flex-col md:flex-row gap-4 items-center'>
-
 
             <section className=' w-full md:w-1/3'>
                 {showDetail ? (
@@ -90,6 +125,7 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                                 if (selectedProduct) {
                                     setSelect1(e.target.value);
                                     setShowDetail(selectedProduct);
+                                    fetchProductByid(selectedProduct.id)
                                 }
                             }}
                             value={select1}
@@ -103,18 +139,21 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
                     <div className='w-full'>
                         <label htmlFor="">ราคามัดจำ (บาท) </label>
-                        <div className='w-full border border-gray-400 px-4 py-2 rounded-md mt-2 bg-gray-200'>{Number(select2).toLocaleString() || "0.00"}</div>
+                        <div className='w-full border border-gray-400 px-4 py-2 rounded-md mt-2 bg-gray-200'>{Number(deposit).toLocaleString() || "0.00"}</div>
                     </div>
 
                     <div className='w-full'>
                         <label htmlFor="">รอบจ่ายค่าเช่า (วัน) </label>
+
+
                         <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect3(e.target.value)} value={select3}>
                             <option value="">เลือก</option>
-                            <option value="7">7 วัน</option>
-                            <option value="10">10 วัน</option>
-                            <option value="15">15 วัน</option>
-
+                            {selectDay.map((item, index) => (
+                                <option key={index} value={item.value}>{item.label}</option>
+                            ))}
                         </select>
+
+
                     </div>
                 </div>
 
@@ -123,7 +162,9 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                     <button onClick={handleCancel} className=' w-full bg-linear-to-r from-blue-400 to-blue-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยกเลิก</button>
                 </div>
 
-                <div className='mt-8 text-center'>
+
+
+                <div className='mt-3 text-center'>
                     <h2 className='text-3xl'>ราคา {Number(sum).toLocaleString()} บาท</h2>
                 </div>
             </section>
