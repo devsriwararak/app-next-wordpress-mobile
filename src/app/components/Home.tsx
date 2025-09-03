@@ -1,17 +1,23 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Page1 from './pages/Page1'
 import Page2 from './pages/Page2'
 import Page3 from './pages/Page3'
 import Page4 from './pages/Page4'
+import { toast } from 'react-toastify'
 
 const PageHome = () => {
     const [selectPage, setSelectPage] = useState<number | null>(null)
     const [statusForm, setStatusForm] = useState(false)
 
+    useEffect(() => {
+        setStatusForm(false)
+    }, [selectPage])
+
+
     return (
         <div className=''>
-            <h1 className='text-3xl font-extrabold text-center mt-20 ' >เลือกรายการที่ต้องการ  <span className='bg-red-600 text-white px-4 py-2 rounded-md'>(ส่งเพื่อตรวจ แยกกันกับ เว็บไซต์ ครั้งที่ 1/2)</span></h1>
+            <h1 className='text-3xl font-extrabold text-center mt-8 ' >เลือกรายการที่ต้องการ  </h1>
 
             <div className='flex flex-row gap-3 md:gap-4 items-center justify-center mt-10 mx-4 md:mx-40 text-base '>
                 <div className={`w-full border border-gray-400 rounded-md px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 1 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(1)}>
@@ -76,22 +82,9 @@ const PageHome = () => {
                             <p>เบอร์โทรศัพท์</p>
                             <input type="number" placeholder='กรอกเบอร์โทรศัพท์' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2' />
                         </div>
-
-
                     </div>
 
-                    <div className='flex flex-col md:flex-row gap-4 mt-6'>
-                        <div className='w-full'>
-                            <p>ที่อยู่</p>
-                            <input type="text" placeholder='กรอกที่อยู่' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2' />
-                        </div>
-                        {/* 
-                        <div className='w-full'>
-                            <p>คำนำหน้าชื่อ</p>
-                            <input type="text" placeholder='กรอกชื่อ' className='border border-gray-400 px-4 py-1.5 rounded-md w-full mt-2' />
-                        </div> */}
-                    </div>
-                    <button onClick={() => alert('บันทึกสำเร็จ !')} className='mt-10 w-full bg-linear-to-r from-green-600 to-green-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยืนยัน</button>
+                    <button onClick={() => toast.success('บันทึกสำเร็จ !')} className='mt-10 w-full bg-linear-to-r from-green-600 to-green-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยืนยัน</button>
                 </div>
             )}
 

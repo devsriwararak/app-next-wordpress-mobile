@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Prompt } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layouts/Header";
+  import { ToastContainer } from 'react-toastify';
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +13,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+
+const prompt = Prompt({
+  variable: "--font-prompt",
+  subsets: ["latin"],
+   weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -26,8 +35,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        // className={`${geistSans.variable} ${geistMono.variable} ${prompt.variable} antialiased`}
+        className={` ${prompt.variable} `}
       >
+        <ToastContainer theme="colored" autoClose={2000} />
         <Header/>
         <div className="my-8  container mx-auto">
           {children}

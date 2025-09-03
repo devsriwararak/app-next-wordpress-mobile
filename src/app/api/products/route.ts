@@ -14,12 +14,12 @@ export async function GET(request: Request) {
 
     // ดึง category จาก query params
   const url = new URL(request.url);
-  const category = url.searchParams.get("product-category"); // เช่น ?category=123
+  const category = url.searchParams.get("category"); // เช่น ?category=123
 
   try {
        let endpoint = `${websiteUrl}/wp-json/wc/v3/products`;
     if (category) {
-      endpoint += `?product-category=${category}`;
+      endpoint += `?category=${category}`;
     }
     const res = await fetch(`${endpoint}`, {
       headers: {
@@ -32,3 +32,5 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Failed to fetch" }, { status: 500 });
   }
 }
+
+
