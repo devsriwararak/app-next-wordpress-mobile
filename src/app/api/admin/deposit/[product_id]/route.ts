@@ -10,10 +10,10 @@ type DepositParams = {
 
 export async function GET(
   request: NextRequest,
-   context: { params: Promise<{ product_id: string }> }
+   context: { params: Promise<{ product_id: string }> } 
 ) {
   try {
-   const { product_id } = (await context.params) as DepositParams;
+   const { product_id } = await context.params;
     console.log({ product_id })
 
     const downData = await prisma.deposit_price.findUnique({
