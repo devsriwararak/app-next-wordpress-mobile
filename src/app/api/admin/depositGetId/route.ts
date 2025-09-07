@@ -1,9 +1,7 @@
-import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient()
-
-
+const prisma = new PrismaClient();
 
 export async function POST(req: Request) {
   try {
@@ -12,18 +10,17 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }
 
-
     const deposit = await prisma.deposit_price.findUnique({
       where: { product_id: Number(product_id) },
     });
 
     if (!deposit) {
-      return NextResponse.json({ error: "Data not found" }, { status: 404 });
+      return NextResponse.json({ error: 'Data not found' }, { status: 404 });
     }
-    
-    return NextResponse.json(deposit, { status: 201 });
+
+    return NextResponse.json(deposit);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create data' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
   }
 }
 
