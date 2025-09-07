@@ -88,7 +88,7 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
     const fetchDataById = async (product_id: number): Promise<number> => {
         try {
             // const res = await fetch(`/api/admin/deposit/${product_id}`);
-            const res = await fetch("/api/admin/deposit/get-id", {
+            const res = await fetch("/api/admin/deposit-get-id", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ product_id: product_id }),
