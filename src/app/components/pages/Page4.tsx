@@ -14,7 +14,7 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
     const [select3, setSelect3] = useState("")
 
     const [sum, setSum] = useState(0)
-    const [sumDown , setSumDown] = useState(0)
+    const [sumDown, setSumDown] = useState(0)
     const [showDetail, setShowDetail] = useState<Product | null>(null)
     const [deposit, setDeposit] = useState<number | null>(null)
 
@@ -69,21 +69,37 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
         }
     }
 
-    const fetchDataById = async (product_id: number) => {
+    // const fetchDataById = async (product_id: number) => {
 
+    //     try {
+    //         const res = await fetch(`/api/admin/deposit/${product_id}`);
+    //         const data = await res.json();
+    //         const price = data.price || 0
+    //         console.log({ price });
+
+    //         return price
+
+    //     } catch (error) {
+    //         console.log(error);
+
+    //     }
+    // }
+
+    const fetchDataById = async (product_id: number): Promise<number> => {
         try {
             const res = await fetch(`/api/admin/deposit/${product_id}`);
+            if (!res.ok) throw new Error("Network response was not ok");
+
             const data = await res.json();
-            const price = data.price || 0
+            const price = Number(data.price) || 0;
             console.log({ price });
 
-            return price
-
+            return price;
         } catch (error) {
-            console.log(error);
-
+            console.error(error);
+            return 0; // fallback
         }
-    }
+    };
 
 
     const handleCalculate = async () => {
@@ -95,11 +111,11 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
             test = test;
         } else if (Number(select3) >= 4 && Number(select3) <= 7) {
             test = test * 2;
-        } 
-        else if (Number(select3) >= 8 && Number(select3) <= 12 ) {
-            test = test * 3; 
-        } else if (Number(select3) >= 13 && Number(select3) <= 17 ) {
-            test = test * 4; 
+        }
+        else if (Number(select3) >= 8 && Number(select3) <= 12) {
+            test = test * 3;
+        } else if (Number(select3) >= 13 && Number(select3) <= 17) {
+            test = test * 4;
         }
 
         if (select1 && select3 && deposit) {
@@ -123,15 +139,34 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
         setSumDown(0)
     }
 
+    // useEffect(() => {
+    //     const fetchAndSetDeposit = async () => {
+    //         if (select1) {
+    //             const result = await fetchDataById(Number(select1));
+    //             console.log({ result });
+
+    //             if (result) {
+    //                 setDeposit(Number(result));
+    //             }
+    //         }
+    //     };
+
+    //     fetchAndSetDeposit();
+    // }, [select1]);
+
     useEffect(() => {
         const fetchAndSetDeposit = async () => {
-            if (select1) {
-                const result = await fetchDataById(Number(select1));
-                console.log({ result });
+            if (!select1) return;
 
-                if (result) {
-                    setDeposit(Number(result));
-                }
+            setLoading(true);
+            try {
+                const price = await fetchDataById(Number(select1));
+                setDeposit(price);
+            } catch (error) {
+                console.error("Failed to fetch deposit:", error);
+                setDeposit(null);
+            } finally {
+                setLoading(false);
             }
         };
 
