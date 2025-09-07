@@ -8,30 +8,54 @@ type DepositParams = {
   product_id: string;
 };
 
-export async function GET(
-  request: NextRequest,
-   context: { params: Promise<{ product_id: string }> } 
-) {
+// export async function GET(
+//   request: NextRequest,
+//    context: { params: Promise<{ product_id: string }> } 
+// ) {
+//   try {
+//    const { product_id } = await context.params;
+//     console.log({ product_id })
+
+//     const downData = await prisma.deposit_price.findUnique({
+//       where: {
+//         product_id: parseInt(product_id, 10),
+//       },
+//     })
+
+//     if (!downData) {
+//       return NextResponse.json({ error: 'Data not found' }, { status: 404 })
+//     }
+
+//     return NextResponse.json(downData)
+//   } catch (error) {
+//     console.error('API Error:', error)
+//     return NextResponse.json(
+//       { error: 'Failed to fetch data' },
+//       { status: 500 }
+//     )
+//   }
+// }
+
+
+export async function POST(request: NextRequest) {
   try {
-   const { product_id } = await context.params;
-    console.log({ product_id })
-
-    const downData = await prisma.deposit_price.findUnique({
-      where: {
-        product_id: parseInt(product_id, 10),
-      },
-    })
-
-    if (!downData) {
-      return NextResponse.json({ error: 'Data not found' }, { status: 404 })
+    const body = await request.json();
+    const product_id = body.product_id;
+    if (!product_id) {
+      return NextResponse.json({ error: "product_id is required" }, { status: 400 });
     }
 
-    return NextResponse.json(downData)
+    const downData = await prisma.deposit_price.findUnique({
+      where: { product_id: Number(product_id) },
+    });
+
+    if (!downData) {
+      return NextResponse.json({ error: "Data not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(downData);
   } catch (error) {
-    console.error('API Error:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch data' },
-      { status: 500 }
-    )
+    console.error("API Error:", error);
+    return NextResponse.json({ error: "Failed to fetch data" }, { status: 500 });
   }
 }
