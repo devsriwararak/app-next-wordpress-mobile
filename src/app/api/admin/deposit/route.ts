@@ -22,7 +22,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid input' }, { status: 400 });
     }
 
-
     const existingProduct = await prisma.deposit_price.findUnique({
       where: { product_id: product_id },
     });
