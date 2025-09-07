@@ -3,10 +3,9 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function POST(request: NextRequest) {
+export async function POST(req: Request) {
   try {
-    const body = await request.json();
-    const product_id = body.product_id;
+     const { product_id } = await req.json();
 
     if (!product_id) {
       return NextResponse.json({ error: "product_id is required" }, { status: 400 });
@@ -26,3 +25,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Failed to fetch data" }, { status: 500 });
   }
 }
+
