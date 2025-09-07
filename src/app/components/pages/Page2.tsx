@@ -1,7 +1,7 @@
 
 
 "use client"
-import { Product } from '@/app/type';
+import { Down, Product } from '@/app/type';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
@@ -19,6 +19,20 @@ const Page2 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
     const [showDetail, setShowDetail] = useState<Product | null>(null)
     const [sumDown, setSumDown] = useState(0)
+    const [downs, setDowns] = useState<Down[]>([]);
+    const [mounts, setMounts] = useState<Down[]>([]);
+
+    const fetchDowns = async () => {
+        const res = await fetch('/api/admin/downs');
+        const data = await res.json();
+        setDowns(data);
+    };
+
+    const fetchMounts = async () => {
+        const res = await fetch('/api/admin/mounts');
+        const data = await res.json();
+        setMounts(data);
+    };
 
 
     useEffect(() => {
@@ -44,15 +58,16 @@ const Page2 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
             }
         }
         fetchProducts();
+        fetchDowns()
+        fetchMounts()
     }, []);
 
     const handleCalculate = () => {
         let sum = null
         if (select1 && select2 && select3) {
-            const test = (Number(select1) * Number(select2)) / 100
-            sum = (Number(select1) - test) / Number(select3)
-            setStatusForm(true)
-            setSumDown(test)
+            sum = (Number(select1) - Number(select2)) / Number(select3)           
+             setStatusForm(true)
+            setSumDown(Number(select2))
         } else {
             toast.error('กรุณาเลือกให้ครบทุกรายการ !')
         }
@@ -107,10 +122,11 @@ const Page2 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                         <label htmlFor="">ดาว กี่% </label>
                         <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect2(e.target.value)} value={select2}>
                             <option value="">เลือก</option>
-                            <option value="30">30% </option>
-                            <option value="40">40%</option>
-                            <option value="50">50%</option>
-                            <option value="60">60%</option>
+                            {
+                                downs.map((item) => (
+                                    <option key={item.id} value={item.sum}>{item.name} </option>
+                                ))
+                            }
                         </select>
                     </div>
 
@@ -118,10 +134,11 @@ const Page2 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                         <label htmlFor="">ผ่อนกี่เดือน </label>
                         <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect3(e.target.value)} value={select3}>
                             <option value="">เลือก</option>
-                            <option value="3">3 เดือน</option>
-                            <option value="6">6 เดือน</option>
-                            <option value="8">8 เดือน</option>
-                            <option value="10">10 เดือน</option>
+                            {
+                                mounts.map((item) => (
+                                    <option key={item.id} value={item.sum}>{item.name} </option>
+                                ))
+                            }
                         </select>
                     </div>
                 </div>

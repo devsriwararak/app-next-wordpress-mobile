@@ -60,3 +60,16 @@ export interface Variation {
     description?: string;
     attributes: Attribute[];
 }
+
+export type Down = {
+    id: number;
+    name: string;
+    sum: number;
+};
+
+export type deposit = {
+      id: number;
+    product_id: number;
+    product_name :string
+    price: number;
+}

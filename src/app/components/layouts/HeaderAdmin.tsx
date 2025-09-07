@@ -1,12 +1,13 @@
 
 
 'use client'
+import { signOut } from 'next-auth/react';
 import Image from 'next/image'
 import Link from 'next/link';
 import React, { useState } from 'react'
 import { BiMap, BiSolidMap, BiSolidUserPlus } from 'react-icons/bi';
 
-const Header = () => {
+const HeaderAdmin = () => {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
@@ -21,24 +22,20 @@ const Header = () => {
 
                 {/* Desktop Menu */}
                 <nav className="hidden md:flex md:gap-8 font-extrabold">
-                    <a href="https://mittrathaiphone.com/iphone-new/" className="hover:text-blue-600">ผ่อนไอโฟน</a>
-                    <a href="https://mittrathaiphone.com/iphone-for-cash/" className="hover:text-blue-600">ไอโฟนแลกเงิน</a>
-                    <a href="https://mittrathaiphone.com/phone-for-rent/" className="hover:text-blue-600">เช่ามือถือ</a>
-                    <a href="https://mittrathaiphone.com/blog/" className="hover:text-blue-600">บทความ</a>
-                    <a href="https://mittrathaiphone.com/about-us/" className="hover:text-blue-600">เกี่ยวกับเรา</a>
+                    <Link href="/admin/pages/page-1" className="hover:text-blue-600">ไอโฟนมือ 1</Link>
+                    <Link href="/admin/pages/page-2" className="hover:text-blue-600">ไอโฟนมือ 2</Link>
+                    <Link href="/admin/pages/page-3" className="hover:text-blue-600">ไอโฟนแลกเงิน</Link>
+                    <Link href="/admin/pages/page-4" className="hover:text-blue-600">ผ่อนกับบริษัทเรา</Link>
                 </nav>
 
                 {/* Desktop Buttons */}
                 <div className="hidden md:flex md:gap-4">
-                    <button className="bg-gray-200 px-6 py-2 rounded-full font-extrabold flex items-center gap-1">
-                        <BiSolidMap size={25} color='red' />
-                        <p>สาขาใกล้คุณ</p>
+                    <button
+                        onClick={() => signOut({ callbackUrl: "/" })}
+                        className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600 transition"
+                    >
+                        ออกจากระบบ
                     </button>
-                    <button className="bg-gradient-to-r from-blue-400 to-blue-800 px-8 py-2 rounded-full text-white font-extrabold flex items-center gap-1">
-                        <BiSolidUserPlus size={25} color='white' />
-                        <p>ติดต่อเรา</p>
-                    </button>
-
                 </div>
 
                 {/* Mobile Hamburger */}
@@ -74,17 +71,16 @@ const Header = () => {
             {/* Mobile Menu */}
             {menuOpen && (
                 <div className="md:hidden px-4 pb-4 space-y-3">
-                    <a href="https://mittrathaiphone.com/iphone-new/" className="block font-extrabold hover:text-blue-600">ผ่อนไอโฟน</a>
-                    <a href="https://mittrathaiphone.com/iphone-for-cash/" className="block font-extrabold hover:text-blue-600">ไอโฟนแลกเงิน</a>
-                    <a href="https://mittrathaiphone.com/phone-for-rent/" className="block font-extrabold hover:text-blue-600">เช่ามือถือ</a>
-                    <a href="https://mittrathaiphone.com/blog/" className="block font-extrabold hover:text-blue-600">บทความ</a>
-                    <a href="https://mittrathaiphone.com/about-us/" className="block font-extrabold hover:text-blue-600">เกี่ยวกับเรา</a>
+                    <Link href="/admin/pages/page-1" className="block font-extrabold hover:text-blue-600">ไอโฟนมือ 1</Link>
+                    <Link href="/admin/pages/page-2" className="block font-extrabold hover:text-blue-600">ไอโฟนมือ 2</Link>
+                    <Link href="/admin/pages/page-3" className="block font-extrabold hover:text-blue-600">ไอโฟนแลกเงิน</Link>
+                    <Link href="/admin/pages/page-4" className="block font-extrabold hover:text-blue-600">ผ่อนกับบริษัทเรา</Link>
                     <div className="flex flex-col gap-2 mt-2">
-                        <button className="bg-gray-200 px-6 py-2 rounded-full font-extrabold">
-                            สาขาใกล้คุณ
-                        </button>
-                        <button className="bg-gradient-to-r from-blue-400 to-blue-800 px-8 py-2 rounded-full text-white font-extrabold">
-                            ติดต่อเรา
+                        <button
+                            onClick={() => signOut({ callbackUrl: "/" })}
+                            className="px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600 transition"
+                        >
+                            ออกจากระบบ
                         </button>
                     </div>
                 </div>
@@ -93,4 +89,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default HeaderAdmin

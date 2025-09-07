@@ -75,6 +75,7 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
     return (
         <div className='flex flex-col md:flex-row gap-4 items-center'>
+            
 
             <section className=' w-full md:w-1/3'>
                 {showDetail ? (
@@ -87,6 +88,9 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
             </section>
 
             <section className='w-full md:w-2/3'>
+
+            <p className='my-4 bg-yellow-400'>รอถามลูกค้าว่า จะเอาค่าความเสียหายกี่ช่อง อะไรบ้าง ?</p>
+            
                 <div className='flex flex-col md:flex-row gap-4'>
                     <div className='w-full'>
                         <label htmlFor="">เลือกรุ่นมือถือ </label>
@@ -169,9 +173,9 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                     <h2 className='text-3xl'>ราคา {Number(sum).toLocaleString()} บาท</h2>
                 </div>
 
-                <div className='mt-8 text-center'>
+                {/* <div className='mt-8 text-center'>
                     <h2 className='text-3xl'>ผ่อนเดือนละ {Number(sumMount).toLocaleString()} บาท</h2>
-                </div>
+                </div> */}
 
                 <div className='mt-8 text-center'>
                     <h2 className='text-sm text-red-500'>

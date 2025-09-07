@@ -22,7 +22,7 @@
 //       }
 //     });
 //     console.log({response});
-    
+
 //     if (!response.ok) {
 //       throw new Error(`HTTP error! status: ${response.status}`);
 //     }
@@ -54,6 +54,7 @@ import { useEffect, useState } from "react";
 import ProductWidget from "./components/ProductWidget";
 import { Product } from "./type";
 import PageHome from "./components/Home";
+import Header from "./components/layouts/Header";
 
 export default function Home() {
   // const [products, setProducts] = useState<Product[]>([]);
@@ -79,9 +80,12 @@ export default function Home() {
 
   return (
     <div>
-   
+      <Header />
       {/* <ProductWidget products={products} /> */}
-      <PageHome />
+      <div className="my-8  container mx-auto">
+        <PageHome />
+      </div>
+
     </div>
   );
 }
