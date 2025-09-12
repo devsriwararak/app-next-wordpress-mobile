@@ -1,5 +1,5 @@
 "use client"
-import { DayOption, Product, ProductById, Variation } from '@/app/type';
+import { DayOption, Product, ProductById, ValueOptionType, Variation } from '@/app/type';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
@@ -16,7 +16,10 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
     const [sum, setSum] = useState(0)
     const [sumDown, setSumDown] = useState(0)
     const [showDetail, setShowDetail] = useState<Product | null>(null)
+    const [showDetail2, setShowDetail2] = useState<ProductById | null>(null)
     const [deposit, setDeposit] = useState<number | null>(null)
+
+    const [label, setLabel] = useState<string[]>([])
 
 
 
@@ -28,7 +31,6 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                 const response = await fetch("/api/products?category=47");
                 const data: Product[] = await response.json();
                 setProducts(data);
-
             } catch (error) {
                 console.error("Error fetching products:", error);
             } finally {
@@ -43,25 +45,10 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
         try {
             const response = await fetch(`/api/product?id=${id}`);
             const data: ProductById = await response.json();
-            // setProducts(data);
             console.log({ data });
             const labels = data.attributes[1].options
-            console.log({ labels });
-
-            // const dayOptions: DayOption[] = labels.map((label: string) => {
-            //     const variation = (data.variations as Variation[] | undefined)?.find(
-            //         (v) => v.attributes.some((a) => a.option === label)
-            //     );
-
-            //     return {
-            //         label,
-            //         value: variation?.price || "0",
-            //         description: variation?.description || "",
-            //     };
-            // });
-
-            // setSelectDay(dayOptions)
-
+            setLabel(labels)
+            setShowDetail2(data)
         } catch (error) {
             console.error("Error fetching products:", error);
         } finally {
@@ -69,21 +56,7 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
         }
     }
 
-    // const fetchDataById = async (product_id: number) => {
 
-    //     try {
-    //         const res = await fetch(`/api/admin/deposit/${product_id}`);
-    //         const data = await res.json();
-    //         const price = data.price || 0
-    //         console.log({ price });
-
-    //         return price
-
-    //     } catch (error) {
-    //         console.log(error);
-
-    //     }
-    // }
 
     const fetchDataById = async (product_id: number): Promise<number> => {
         try {
@@ -109,30 +82,30 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
 
     const handleCalculate = async () => {
-        let sum = null
-        let test = 50
-        if (Number(select3) <= 1) {
-            test = 0;
-        } else if (Number(select3) >= 2 && Number(select3) <= 3) {
-            test = test;
-        } else if (Number(select3) >= 4 && Number(select3) <= 7) {
-            test = test * 2;
-        }
-        else if (Number(select3) >= 8 && Number(select3) <= 12) {
-            test = test * 3;
-        } else if (Number(select3) >= 13 && Number(select3) <= 17) {
-            test = test * 4;
-        }
+        // let sum = null
+        // let test = 50
+        // if (Number(select3) <= 1) {
+        //     test = 0;
+        // } else if (Number(select3) >= 2 && Number(select3) <= 3) {
+        //     test = test;
+        // } else if (Number(select3) >= 4 && Number(select3) <= 7) {
+        //     test = test * 2;
+        // }
+        // else if (Number(select3) >= 8 && Number(select3) <= 12) {
+        //     test = test * 3;
+        // } else if (Number(select3) >= 13 && Number(select3) <= 17) {
+        //     test = test * 4;
+        // }
 
-        if (select1 && select3 && deposit) {
-            sum = (Number(showDetail?.price) - Number(test)) * Number(select3)
-            setStatusForm(true)
-            setSumDown(test)
+        // if (select1 && select3 && deposit) {
+        //     sum = (Number(showDetail?.price) - Number(test)) * Number(select3)
+        //     setStatusForm(true)
+        //     setSumDown(test)
 
-        } else {
-            toast.error('กรุณาเลือกให้ครบทุกรายการ !')
-        }
-        setSum(Number(sum))
+        // } else {
+        //     toast.error('กรุณาเลือกให้ครบทุกรายการ !')
+        // }
+        // setSum(Number(sum))
 
     }
 
@@ -145,44 +118,40 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
         setSumDown(0)
     }
 
+
+
     // useEffect(() => {
     //     const fetchAndSetDeposit = async () => {
-    //         if (select1) {
-    //             const result = await fetchDataById(Number(select1));
-    //             console.log({ result });
+    //         if (!select1) return;
 
-    //             if (result) {
-    //                 setDeposit(Number(result));
-    //             }
+    //         setLoading(true);
+    //         try {
+    //             const price = await fetchDataById(Number(select1));
+    //             setDeposit(price);
+    //         } catch (error) {
+    //             console.error("Failed to fetch deposit:", error);
+    //             setDeposit(null);
+    //         } finally {
+    //             setLoading(false);
     //         }
     //     };
 
     //     fetchAndSetDeposit();
     // }, [select1]);
 
-    useEffect(() => {
-        const fetchAndSetDeposit = async () => {
-            if (!select1) return;
+    // const handleChangeDay = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    //     const value = e.target.value // 3 
+    //     setSelect3(value)
+    //     console.log(showDetail2);
+    //     const results =  "" // showDetail2?.variations[].attributes.option === 3 ถ้าเจอ อยากได้ค่า showDetail2?.variations[].attributes.regular_price  ; 
+    // }
 
-            setLoading(true);
-            try {
-                const price = await fetchDataById(Number(select1));
-                setDeposit(price);
-            } catch (error) {
-                console.error("Failed to fetch deposit:", error);
-                setDeposit(null);
-            } finally {
-                setLoading(false);
-            }
-        };
 
-        fetchAndSetDeposit();
-    }, [select1]);
 
     if (loading) return <div>โหลดข้อมูล ...... </div>;
 
     return (
-        <div className='flex flex-col md:flex-row gap-4 items-center'>
+        <div className='flex flex-col md:flex-row gap-4 md:gap-8 items-start'>
 
             <section className=' w-full md:w-1/3'>
                 {showDetail ? (
@@ -204,7 +173,7 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                                 const selectedProduct = products.find(p => p.id === Number(e.target.value));
                                 if (selectedProduct) {
                                     setSelect1(e.target.value);
-                                    setShowDetail(selectedProduct);
+                                    // setShowDetail(selectedProduct);
                                     fetchProductByid(selectedProduct.id)
                                 }
                             }}
@@ -218,25 +187,19 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                     </div>
 
                     <div className='w-full'>
-                        <label htmlFor="">ราคามัดจำ (บาท) </label>
-                        <div className='w-full border border-gray-400 px-4 py-2 rounded-md mt-2 bg-gray-200'>{Number(deposit).toLocaleString() || "0.00"}</div>
+                        <label htmlFor="">จำนวนวัน </label>
+                        <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => handleChangeDay(e)} value={select3}>
+                            <option value="">เลือก</option>
+                            {label.length > 0 && label.map((item, index) => (
+                                <option key={index} value={item}>{item}</option>
+                            ))}
+
+                        </select>
                     </div>
 
                     <div className='w-full'>
-                        <label htmlFor="">รอบจ่ายค่าเช่า (วัน) </label>
-
-
-                        <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect3(e.target.value)} value={select3}>
-                            <option value="">เลือก</option>
-                            <option value="1">1 วัน</option>
-                            <option value="3">2-3 วัน</option>
-                            <option value="7">4-7 วัน</option>
-                            <option value="12">8-12 วัน</option>
-                            <option value="17">13-17 วัน</option>
-                            {/* {selectDay.map((item, index) => (
-                                <option key={index} value={item.value}>{item.label}</option>
-                            ))} */}
-                        </select>
+                        <label htmlFor="">ค่าเช่าต่อวัน </label>
+                        <div className='w-full border border-gray-400 px-4 py-2 rounded-md mt-2 bg-gray-200'>{Number(deposit).toLocaleString() || "0.00"}</div>
                     </div>
                 </div>
 

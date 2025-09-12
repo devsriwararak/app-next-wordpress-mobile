@@ -43,6 +43,8 @@ export interface ProductAttribute {
   id: number;
   name: string;
   options: string[];
+  slug: string
+  
 }
 
 export interface DayOption {
@@ -72,4 +74,19 @@ export type deposit = {
     product_id: number;
     product_name :string
     price: number;
+}
+
+export type ShowTableType = {
+  id: number |string
+  mount : number
+  interest : number
+  downPayment : number
+  excellent : number
+  monthly : number
+  sumAll : number
+}
+
+export interface ValueOptionType {
+    label: string;
+    value: string;
 }

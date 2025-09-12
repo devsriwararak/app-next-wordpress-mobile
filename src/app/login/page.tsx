@@ -39,6 +39,7 @@ const PageLogin = () => {
         }
     };
     return (
+       <div>
         <form onSubmit={handleSubmit}>
             <input
                 type="text"
@@ -71,6 +72,7 @@ const PageLogin = () => {
                 </button>
             </div>
         </form>
+       </div>
     )
 }
 

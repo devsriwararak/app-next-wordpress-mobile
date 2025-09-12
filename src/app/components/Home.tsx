@@ -73,7 +73,7 @@ const PageHome = () => {
                 </div>
             </div>
 
-            <div className='flex flex-row gap-3 md:gap-4 items-center justify-center mt-10 mx-4 md:mx-40 '>
+            <div className='flex flex-row gap-3 md:gap-4 items-center justify-center mt-4 mx-4 md:mx-40 '>
                 <div className={`w-full border border-gray-400 rounded-md px-4 py-4  cursor-pointer hover:bg-gray-200 ${selectPage === 3 ? "bg-gray-300" : ""}`} onClick={() => setSelectPage(3)}>
 
                     <div className='text-center flex justify-center items-center gap-2' >
@@ -90,7 +90,7 @@ const PageHome = () => {
                 </div>
             </div>
 
-            <hr className='my-6 md:my-14 mx-6  md:mx-40 text-gray-300' />
+            <hr className='my-6 md:my-12 mx-6  md:mx-40 text-gray-300' />
 
             <div className='mx-6 md:mx-40'>
                 {selectPage === 1 && (<Page1 setStatusForm={setStatusForm} />)}
