@@ -229,7 +229,7 @@ const Page2 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                 }
             })
             setShowTable(updatedDataTable)
-
+setStatusForm(true)
         } else {
             toast.error('กรุณาเลือกให้ครบทุกรายการ !')
             setShowTable([])

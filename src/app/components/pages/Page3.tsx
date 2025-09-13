@@ -106,11 +106,9 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
             } else if (select6 === 'mount' && select6) {
                 setShowTable(updatedDataTableMount)
             }
-            // else {
-            //     setShowTable([])
-            // }
 
 
+            setStatusForm(true)
 
         } else {
             toast.error('กรุณาเลือกให้ครบทุกรายการ !')

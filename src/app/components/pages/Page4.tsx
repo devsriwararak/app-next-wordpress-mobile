@@ -112,6 +112,7 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
         })
 
         setShowTable(dataTable)
+        setStatusForm(true)
 
     }
 
