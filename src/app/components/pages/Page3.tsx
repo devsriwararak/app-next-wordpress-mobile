@@ -99,12 +99,16 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                     profit: 0 // กำไร
                 }
             })
+
             console.log(select6);
-            if (select6 === 'day') {
+            if (select6 === 'day' && select6) {
                 setShowTable(updatedDataTableDay)
-            } else {
+            } else if (select6 === 'mount' && select6) {
                 setShowTable(updatedDataTableMount)
             }
+            // else {
+            //     setShowTable([])
+            // }
 
 
 
@@ -128,6 +132,8 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
     }
 
     const handleChagePrice = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setShowTable([])
+        setSelect6("")
         const price = e.target.value
         setSelect5(price)
         let data: ValueOptionType[]

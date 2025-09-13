@@ -96,15 +96,15 @@ const PageHome = () => {
                 {selectPage === 2 && (<Page2 setStatusForm={setStatusForm} />)}
                 {selectPage === 3 && (<Page3 setStatusForm={setStatusForm} />)}
                 {selectPage === 4 && (<Page4 setStatusForm={setStatusForm} />)}
-
             </div>
-
 
             <hr className='my-6 md:my-14 mx-6  md:mx-40 text-gray-300' />
 
             {/* Form SEnd */}
             {statusForm && (
-                <div className='mt-10 mx-40'>
+                <div className='mt-0 mx-40'>
+                     <h1 className='text-3xl font-extrabold text-center  ' >ลงทะเบียนเพื่อติดต่อเจ้าหน้าที่  </h1>
+
                     <div className='flex flex-col md:flex-row gap-4'>
                         <div className='w-full'>
                             <p>ชื่อ-สกุล</p>
