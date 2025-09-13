@@ -276,7 +276,7 @@ const Page2 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
             <section className='w-full md:w-2/3'>
                 <div className='flex flex-col md:flex-row gap-4'>
                     <div className='w-full'>
-                        <label htmlFor="">เลือกรุ่นมือถือ  </label>
+                        <label htmlFor="" className='font-semibold'>เลือกรุ่นมือถือ  </label>
                         <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2'
                             // onChange={(e) => {setSelect1(e.target.value)}} 
                             onChange={(e) => {
@@ -298,7 +298,7 @@ const Page2 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                     </div>
 
                     <div className='w-full'>
-                        <label htmlFor="">เงินดาวน์ </label>
+                        <label htmlFor="" className='font-semibold'>เงินดาวน์ </label>
                         <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect2(e.target.value)} value={select2}>
                             <option value="">เลือก</option>
                             {

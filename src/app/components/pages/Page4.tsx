@@ -1,8 +1,14 @@
 "use client"
-import { DayOption, Product, ProductById, ValueOptionType, Variation } from '@/app/type';
+import { DayOption, Product, ProductById, ShowTableType, ValueOptionType, Variation } from '@/app/type';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
+
+interface TableType {
+    day: string;
+    sumAll: number;
+    perDay: string | number;
+}
 
 const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) => {
 
@@ -22,8 +28,11 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
     const [label, setLabel] = useState<string[]>([])
 
 
-
     const [selectDay, setSelectDay] = useState<DayOption[]>([])
+    const [showTable, setShowTable] = useState<TableType[]>([])
+    const [maxRate, setMaxRate] = useState<number>(0)
+
+
 
     useEffect(() => {
         async function fetchProducts() {
@@ -45,10 +54,13 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
         try {
             const response = await fetch(`/api/product?id=${id}`);
             const data: ProductById = await response.json();
-            console.log({ data });
+
             const labels = data.attributes[1].options
+            const deposit = data.attributes[0].options
+            console.log(deposit);
             setLabel(labels)
             setShowDetail2(data)
+            setDeposit(Number(deposit))
         } catch (error) {
             console.error("Error fetching products:", error);
         } finally {
@@ -82,30 +94,24 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
 
     const handleCalculate = async () => {
-        // let sum = null
-        // let test = 50
-        // if (Number(select3) <= 1) {
-        //     test = 0;
-        // } else if (Number(select3) >= 2 && Number(select3) <= 3) {
-        //     test = test;
-        // } else if (Number(select3) >= 4 && Number(select3) <= 7) {
-        //     test = test * 2;
-        // }
-        // else if (Number(select3) >= 8 && Number(select3) <= 12) {
-        //     test = test * 3;
-        // } else if (Number(select3) >= 13 && Number(select3) <= 17) {
-        //     test = test * 4;
-        // }
 
-        // if (select1 && select3 && deposit) {
-        //     sum = (Number(showDetail?.price) - Number(test)) * Number(select3)
-        //     setStatusForm(true)
-        //     setSumDown(test)
+        const dataTable = label.map((item) => {
 
-        // } else {
-        //     toast.error('กรุณาเลือกให้ครบทุกรายการ !')
-        // }
-        // setSum(Number(sum))
+            const selectedVariation = showDetail2?.variations?.find(variation => {
+                return variation.attributes.some(attr => String(attr.option) === String(item))
+            })
+
+            const result = selectedVariation?.regular_price || 0
+            const sumAll = Number(result) * Number(item)
+
+            return {
+                day: item,
+                sumAll,
+                perDay: result,
+            }
+        })
+
+        setShowTable(dataTable)
 
     }
 
@@ -116,35 +122,27 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
         setStatusForm(false)
         setShowDetail(null)
         setSumDown(0)
+        setShowTable([])
+        setShowDetail2(null)
+
+
     }
 
 
 
-    // useEffect(() => {
-    //     const fetchAndSetDeposit = async () => {
-    //         if (!select1) return;
+    const handleChangeDay = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const value = e.target.value // 3 
+        setSelect3(value)
 
-    //         setLoading(true);
-    //         try {
-    //             const price = await fetchDataById(Number(select1));
-    //             setDeposit(price);
-    //         } catch (error) {
-    //             console.error("Failed to fetch deposit:", error);
-    //             setDeposit(null);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
+        const selectedVariation = showDetail2?.variations?.find(item => {
+            return item.attributes.some(attr => attr.option === value)
+        })
 
-    //     fetchAndSetDeposit();
-    // }, [select1]);
+        const result = selectedVariation?.regular_price || 0
+        setDeposit(Number(result))
 
-    // const handleChangeDay = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    //     const value = e.target.value // 3 
-    //     setSelect3(value)
-    //     console.log(showDetail2);
-    //     const results =  "" // showDetail2?.variations[].attributes.option === 3 ถ้าเจอ อยากได้ค่า showDetail2?.variations[].attributes.regular_price  ; 
-    // }
+
+    }
 
 
 
@@ -154,11 +152,10 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
         <div className='flex flex-col md:flex-row gap-4 md:gap-8 items-start'>
 
             <section className=' w-full md:w-1/3'>
-                {showDetail ? (
+                {showDetail2 ? (
                     <div className='border border-gray-300 rounded-md px-4 py-4'>
-                        <Image src={showDetail.images[0].src} alt='' width={900} height={900} />
-                        <p className='mt-2 text-xl'>สินค้า : {showDetail?.name}</p>
-                        <p className='mt-2 text-xl'>ราคา : {Number(showDetail.price).toLocaleString() || "0"} บาท/วัน</p>
+                        <Image src={showDetail2?.images[0]?.src || ""} alt='' width={900} height={900} />
+                        <p className='mt-2 text-xl'>รุ่น : {showDetail2?.name}</p>
 
                     </div>
                 ) : <p>กรุณาเลือกสินค้า ....</p>}
@@ -167,7 +164,7 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
             <section className='w-full md:w-2/3'>
                 <div className='flex flex-col md:flex-row gap-4'>
                     <div className='w-full'>
-                        <label htmlFor="">เลือกรุ่นมือถือ </label>
+                        <label htmlFor="" className='font-semibold'>เลือกรุ่นมือถือ </label>
                         <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2'
                             onChange={(e) => {
                                 const selectedProduct = products.find(p => p.id === Number(e.target.value));
@@ -175,6 +172,8 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                                     setSelect1(e.target.value);
                                     // setShowDetail(selectedProduct);
                                     fetchProductByid(selectedProduct.id)
+                                    setSelect3("")
+                                    setDeposit(0)
                                 }
                             }}
                             value={select1}
@@ -185,31 +184,17 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                             ))}
                         </select>
                     </div>
-
-                    <div className='w-full'>
-                        <label htmlFor="">จำนวนวัน </label>
-                        <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => handleChangeDay(e)} value={select3}>
-                            <option value="">เลือก</option>
-                            {label.length > 0 && label.map((item, index) => (
-                                <option key={index} value={item}>{item}</option>
-                            ))}
-
-                        </select>
-                    </div>
-
-                    <div className='w-full'>
-                        <label htmlFor="">ค่าเช่าต่อวัน </label>
-                        <div className='w-full border border-gray-400 px-4 py-2 rounded-md mt-2 bg-gray-200'>{Number(deposit).toLocaleString() || "0.00"}</div>
-                    </div>
                 </div>
 
-                <div className='mt-8 text-center flex gap-4'>
+                <p className='my-5 text-2xl w-full '>ค่ามัดจำ : {Number(deposit).toLocaleString() || "0"} บาท</p>
+
+                <div className='mt-5 text-center flex gap-4'>
                     <button onClick={handleCalculate} className=' w-full bg-linear-to-r from-orange-400 to-orange-600 py-3 rounded-md text-white font-extrabold cursor-pointer'>คำนวณ</button>
                     <button onClick={handleCancel} className=' w-full bg-linear-to-r from-blue-400 to-blue-800 py-3 rounded-md text-white font-extrabold cursor-pointer'>ยกเลิก</button>
                 </div>
 
 
-
+                {/* 
                 <div className='mt-3 text-center flex gap-2 '>
                     <h2 className='text-3xl'>ราคา {Number(sum).toLocaleString()} บาท</h2>
                     <p> (ราคตามือถือ - ส่วนต่าง) -  วัน</p>
@@ -218,7 +203,47 @@ const Page4 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
                 <div className='mt-3 text-center flex gap-2 '>
                     <h2 className='text-xl'>ถูกลง {Number(sumDown).toLocaleString()} บาท</h2>
+                </div> */}
+
+                <div className='mt-6 text-center flex gap-4 '>
+                    <div className="relative overflow-x-auto shadow-md sm:rounded-lg w-full">
+                        {showTable.length > 0 && (
+                            <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                                <thead className="text-sm text-gray-700 uppercase bg-gray-300  ">
+                                    <tr>
+                                        <th scope="col" className="px-4 py-4">
+                                            ระยะเวลา
+                                        </th>
+                                        <th scope="col" className="px-4 py-4">
+                                            ค่าเช่าทั้งหมด
+                                        </th>
+                                        <th scope="col" className="px-4 py-4">
+                                            เฉลียวันละ
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {showTable.map((item, index) => (
+                                        <tr key={index}
+                                            className={`${index % 2 === 1 ? "bg-gray-50" : "bg-white"} border border-gray-200`}
+                                        >
+                                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                                {item.day}  วัน
+                                            </th>
+                                            <td className="px-4 py-4">
+                                                {Number(item.sumAll).toLocaleString()} บาท
+                                            </td>
+                                            <td className="px-4 py-4">
+                                                {Number(item.perDay).toLocaleString()} บาท
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        )}
+                    </div>
                 </div>
+
             </section>
 
         </div>

@@ -176,7 +176,7 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
 
                 <div className='w-full'>
-                    <label htmlFor="">เลือกรุ่นมือถือ  </label>
+                    <label htmlFor="" className='font-semibold'>เลือกรุ่นมือถือ  </label>
                     <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2'
                         // onChange={(e) => { setSelect1(e.target.value) }}
                         onChange={(e) => {
@@ -202,7 +202,7 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
                 <div className='flex flex-col md:flex-row gap-4 mt-4'>
                     <div className='w-full'>
-                        <label htmlFor="">ประเมินหน้าจอ </label>
+                        <label htmlFor="" className='font-semibold'>ประเมินหน้าจอ </label>
                         <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect2(e.target.value)} value={select2}>
                             <option value="">เลือก</option>
                             <option value="no">ไม่แตก</option>
@@ -211,7 +211,7 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                     </div>
 
                     <div className='w-full'>
-                        <label htmlFor="">ประกันศูนย์ </label>
+                        <label htmlFor="" className='font-semibold'>ประกันศูนย์ </label>
                         <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => setSelect3(e.target.value)} value={select3}>
                             <option value="">เลือก</option>
                             <option value="no">ไม่มี</option>
@@ -220,7 +220,7 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
                     </div>
 
                     <div className='w-full'>
-                        <label htmlFor="">แบตเตอรี่ </label>
+                        <label htmlFor="" className='font-semibold'>แบตเตอรี่ </label>
                         <select className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => handleSelectBattery(e)} value={select4}>
                             <option value="">เลือก</option>
                             {
@@ -236,17 +236,17 @@ const Page3 = ({ setStatusForm }: { setStatusForm: (value: boolean) => void }) =
 
                 </div>
 
-                <p className='my-8 text-2xl w-full '>ยอดแลกไอโฟนสูงสุด : {Number(maxRate).toLocaleString() || "0"} บาท</p>
+                <p className='my-8 text-2xl w-full '>ยอดประเมินสูงสุด : {Number(maxRate).toLocaleString() || "0"} บาท</p>
 
                 <div className='flex flex-col md:flex-row gap-4 mt-4 items-end'>
 
                     <div className='w-full'>
-                        <label htmlFor="">ยอดที่ต้องการ </label>
+                        <label htmlFor="" className='font-semibold'>ยอดที่ต้องการ </label>
                         <input type="number" placeholder='0.00' className=' w-full border border-gray-400 px-4 py-2 rounded-md mt-2' onChange={(e) => handleChagePrice(e)} value={select5} />
                     </div>
 
                     <div className='w-full'>
-                        <label htmlFor="">ระยะเวลา </label>
+                        <label htmlFor="" className='font-semibold'>ระยะเวลา </label>
                         <select
                             className={` w-full border border-gray-400 px-4 py-2 rounded-md mt-2
                             ${!select5 ? 'bg-gray-200 text-gray-500' : ''} `}
